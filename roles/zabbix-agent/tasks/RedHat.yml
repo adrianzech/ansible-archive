@@ -1,0 +1,5 @@
+---
+- name: Add zabbix repo
+  yum:
+    name: zabbix
+    baseurl: rpm -Uvh "{{ repo_url }}"

@@ -1,0 +1,57 @@
+---
+- name: Include os specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Include os specific tasks
+  include_tasks: "{{ ansible_os_family }}.yml"
+
+- name: Change listen_adresses
+  lineinfile: 
+    dest: "{{ postgresql_conf_path }}"
+    regexp: "^#?listen_addresses"
+    line: "listen_addresses = '{{ listen_addresses }}'"
+    state: present
+
+- name: Change listen_adresses
+  lineinfile: 
+    dest: "{{ pg_hba_conf_path }}"
+    line: "host    all             all             10.0.0.0/16             md5" 
+    state: present
+
+- name: Ensure postgresql is running and enabled
+  service:
+    name: postgresql
+    state: started
+    enabled: true
+
+- name: Change postgres user password
+  become: true
+  become_user: postgres
+  postgresql_user:
+    name: postgres
+    password: "{{ postgres_password }}"
+
+- name: Create databases
+  become: true
+  become_user: postgres
+  postgresql_db:
+    name: "{{ item.database }}"
+  loop: "{{ databases }}"
+
+- name: Create users
+  become: true
+  become_user: postgres
+  postgresql_user:
+    name: "{{ item.user }}"
+    password: "{{ item.password }}"
+  loop: "{{ databases }}"
+
+- name: Grant permissions
+  become: yes
+  become_user: postgres
+  postgresql_privs:
+    db: "{{ item.database }}"
+    role: "{{ item.user }}"
+    privs: ALL
+    type: database
+  loop: "{{ databases }}"

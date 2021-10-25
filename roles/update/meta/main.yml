@@ -1,0 +1,22 @@
+---
+dependencies: []
+
+galaxy_info:
+  author: Adrian Zech
+  description: Update hosts
+  company: Homelab
+
+  license: license (MIT)
+
+  min_ansible_version: 2.9
+
+  platforms:
+    - name: EL
+      versions:
+        - 8
+    - name: Debian
+      versions:
+        - bullseye
+
+  galaxy_tags:
+    - update

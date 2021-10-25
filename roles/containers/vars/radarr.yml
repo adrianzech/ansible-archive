@@ -1,0 +1,23 @@
+---
+container_name: radarr
+
+image: linuxserver/radarr
+tag: latest
+
+container_directories:
+  - /opt/radarr
+
+container_ports:
+  - 7878:7878
+
+container_env:
+  PUID: 0
+  PGID: 0
+  TZ: Europe/Vienna
+
+container_volumes:
+  - /opt/radarr:/config
+  - /mnt/media/movies:/movies
+  - /mnt/media/downloads:/downloads
+
+container_command:

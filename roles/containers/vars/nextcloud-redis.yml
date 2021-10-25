@@ -1,0 +1,16 @@
+---
+container_name: nextcloud-redis
+
+image: redis
+tag: alpine
+
+container_directories:
+
+container_ports:
+  - 6379:6379
+
+container_env:
+
+container_volumes:
+
+container_command:

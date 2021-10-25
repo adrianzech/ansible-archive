@@ -1,0 +1,16 @@
+---
+container_name: nextcloud-onlyoffice
+
+image: alehoho/oo-ce-docker-license
+tag: latest
+
+container_directories:
+
+container_ports:
+  - 8081:80
+
+container_env:
+
+container_volumes:
+
+container_command:

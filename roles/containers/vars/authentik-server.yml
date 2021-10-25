@@ -1,0 +1,35 @@
+---
+container_name: authentik-server
+
+image: ghcr.io/goauthentik/server
+tag: latest
+
+container_directories:
+  - /opt/authentik/custom-templates
+  - /opt/authentik/media
+
+container_ports:
+  - 9000:9000
+  - 9443:9443
+
+container_env:
+  AUTHENTIK_REDIS__HOST: 10.0.10.100
+  AUTHENTIK_POSTGRESQL__HOST: 10.0.10.110
+  AUTHENTIK_POSTGRESQL__USER: authentik
+  AUTHENTIK_POSTGRESQL__NAME: authentik
+  AUTHENTIK_POSTGRESQL__PASSWORD: "{{ authentik_database_password }}"
+  AUTHENTIK_SECRET_KEY: "{{ authentik_secret }}"
+  AUTHENTIK_EMAIL__HOST: mail.zech.co
+  AUTHENTIK_EMAIL__PORT: 587
+  AUTHENTIK_EMAIL__USERNAME: 'info@zech.co'
+  AUTHENTIK_EMAIL__PASSWORD: "{{ authentik_email_password }}"
+  AUTHENTIK_EMAIL__USE_TLS: true
+  AUTHENTIK_EMAIL__USE_SSL: false
+  AUTHENTIK_EMAIL__TIMEOUT: 10
+  AUTHENTIK_EMAIL__FROM: 'info@zech.co'
+
+container_volumes:
+  - /opt/authentik/media:/media
+  - /opt/authentik/custom-templates:/templates
+
+container_command: server

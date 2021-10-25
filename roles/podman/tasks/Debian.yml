@@ -1,0 +1,10 @@
+---
+- name: Test for line
+  shell: grep -c "^[registries.search]" /etc/containers/registries.conf || true
+  register: test_grep
+
+- name: Add docker.io to registries
+  lineinfile:
+    path: /etc/containers/registries.conf
+    line: "[registries.search]\nregistries = ['docker.io']"
+  when: test_grep.stdout == "0"

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service>
+  <port port="3478" protocol="udp"/>
+  <port port="10001" protocol="udp"/>
+  <port port="8080" protocol="tcp"/>
+  <port port="8443" protocol="tcp"/>
+  <port port="1900" protocol="udp"/>
+  <port port="8843" protocol="tcp"/>
+  <port port="8880" protocol="tcp"/>
+  <port port="6789" protocol="tcp"/>
+  <port port="5514" protocol="udp"/>
+</service>

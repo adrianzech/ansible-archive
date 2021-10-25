@@ -1,0 +1,20 @@
+---
+container_name: dashboard
+
+image: b4bz/homer
+tag: latest
+
+container_directories:
+  - /opt/dashboard
+
+container_ports:
+  - 8080:8080
+
+container_env:
+  PUID: 1000
+  PGID: 1000
+
+container_volumes:
+  - /opt/dashboard:/www/assets
+
+container_command:

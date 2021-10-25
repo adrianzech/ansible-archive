@@ -1,0 +1,21 @@
+---
+container_name: tautulli
+
+image: linuxserver/tautulli
+tag: latest
+
+container_directories:
+  - /opt/tautulli
+
+container_ports:
+  - 8181:8181
+
+container_env:
+  PUID: 0
+  PGID: 0
+  TZ: Europe/Vienna
+
+container_volumes:
+  - /opt/tautulli:/config
+
+container_command:

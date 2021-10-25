@@ -1,0 +1,29 @@
+---
+- name: Enable linger
+  shell: "loginctl enable-linger  {{ user }}"
+
+- name: Install podman
+  package:
+    name: 
+    - podman
+    - cockpit-podman
+    state: present
+  notify: Reboot machine
+
+- name: Flush handlers
+  meta: flush_handlers
+
+- name: Ensure podman is running and enabled
+  service:
+    name: podman
+    state: started
+    enabled: true
+
+- name: Ensure cockpit is running and enabled
+  service:
+    name: cockpit.socket
+    state: started
+    enabled: true
+
+- name: Include os specific tasks
+  include_tasks: "{{ ansible_os_family }}.yml"

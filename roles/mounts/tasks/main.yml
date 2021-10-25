@@ -1,0 +1,36 @@
+---
+- name: Include os specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Install packages
+  package:
+    name: "{{ packages }}"
+    state: latest
+
+- name: Mount media nfs shares
+  mount:
+    fstype: nfs
+    src: "{{ item.source }}"
+    path: "{{ item.mount_point }}"
+    opts: defaults
+    state: mounted
+  loop: "{{ media_shares }}"
+  when: ansible_hostname in media_servers
+
+- name: Mount mergerfs filesystems
+  mount:
+    fstype: fuse.mergerfs
+    src: "{{ mergerfs_mount_points | join(':') }}"
+    path: "{{ media_mount_point }}"
+    opts: defaults,allow_other,use_ino,cache.files=off,dropcacheonclose=true,category.create=lfs,fsname=media,minfreespace=100G,func.getattr=newest
+    state: mounted
+  when: ansible_hostname in media_servers
+
+- name: Mount cloud nfs share
+  mount:
+    fstype: nfs
+    src: "{{ cloud_share }}"
+    path: "{{ cloud_mount_point }}"
+    opts: defaults
+    state: mounted
+  when: ansible_hostname in cloud_servers

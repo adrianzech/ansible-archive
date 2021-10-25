@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service>
+  <port port="8080" protocol="tcp"/>
+  <port port="8443" protocol="tcp"/>
+  <port port="8081" protocol="tcp"/>
+</service>

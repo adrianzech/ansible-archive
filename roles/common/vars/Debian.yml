@@ -1,0 +1,18 @@
+---
+packages:
+  - vim
+  - firewalld
+  - net-tools
+  - software-properties-common
+  - curl
+  - wget
+  - cockpit
+  - cockpit-networkmanager
+  - cockpit-storaged
+  - cockpit-pcp
+  - qemu-guest-agent
+  - unzip
+
+vimrc_path: /etc/vim/vimrc
+
+network_interface: ens18

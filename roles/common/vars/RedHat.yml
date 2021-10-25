@@ -1,0 +1,16 @@
+---
+packages:
+  - vim
+  - net-tools
+  - yum-utils
+  - dnf-automatic
+  - curl
+  - wget
+  - cockpit
+  - cockpit-networkmanager
+  - cockpit-storaged
+  - cockpit-pcp
+  - qemu-guest-agent
+  - unzip
+
+vimrc_path: /etc/vimrc

@@ -1,0 +1,20 @@
+---
+container_name: pgadmin
+
+image: dpage/pgadmin4
+tag: latest
+
+container_directories:
+
+container_ports:
+  - 8080:80
+
+container_env:
+  PGADMIN_DEFAULT_EMAIL: 'adrian@zech.co'
+  PGADMIN_DEFAULT_PASSWORD: "{{ pgadmin_password }}"
+  PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: True
+  PGADMIN_CONFIG_CONSOLE_LOG_LEVEL: 10
+
+container_volumes:
+
+container_command:

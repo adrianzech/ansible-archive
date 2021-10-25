@@ -1,0 +1,22 @@
+---
+container_name: wiki
+
+image: requarks/wiki
+tag: latest
+
+container_directories:
+
+container_ports:
+  - 3000:3000
+
+container_env:
+  DB_TYPE: postgres
+  DB_HOST: 10.0.10.110
+  DB_PORT: 5432
+  DB_NAME: wiki
+  DB_USER: wiki
+  DB_PASS: "{{ wiki_database_password }}"
+
+container_volumes:
+
+container_command:

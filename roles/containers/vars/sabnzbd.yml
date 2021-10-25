@@ -1,0 +1,23 @@
+---
+container_name: sabnzbd
+
+image: linuxserver/sabnzbd
+tag: latest
+
+container_directories:
+  - /opt/sabnzbd
+
+container_ports:
+  - 8080:8080
+
+container_env:
+  PUID: 0
+  PGID: 0
+  TZ: Europe/Vienna
+
+container_volumes:
+  - /opt/sabnzbd:/config
+  - /mnt/media/downloads:/downloads
+  - /mnt/media/incomplete:/incomplete-downloads
+
+container_command:

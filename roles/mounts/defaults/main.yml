@@ -1,0 +1,24 @@
+---
+cloud_servers:
+  - cloud
+
+media_servers:
+  - media-server
+  - media-stack
+  - debian-testing-2
+
+cloud_mount_point: /mnt/cloud
+cloud_share: 10.0.1.100:/cloud
+
+media_mount_point: /mnt/media
+media_shares:
+  - { source: 10.0.1.110:/media_1, mount_point: /mnt/media_1 }
+  - { source: 10.0.1.110:/media_2, mount_point: /mnt/media_2 }
+  - { source: 10.0.1.110:/media_3, mount_point: /mnt/media_3 }
+  - { source: 10.0.1.110:/media_4, mount_point: /mnt/media_4 }
+
+mergerfs_mount_points:
+  - /mnt/media_1
+  - /mnt/media_2
+  - /mnt/media_3
+  - /mnt/media_4

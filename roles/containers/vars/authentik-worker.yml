@@ -1,0 +1,27 @@
+---
+container_name: authentik-worker
+
+image: ghcr.io/goauthentik/server
+tag: latest
+
+container_directories:
+  - /opt/authentik/custom-templates
+  - /opt/authentik/backups
+  - /opt/authentik/media
+
+container_ports:
+
+container_env:
+  AUTHENTIK_REDIS__HOST: 10.0.10.100
+  AUTHENTIK_POSTGRESQL__HOST: 10.0.10.110
+  AUTHENTIK_POSTGRESQL__USER: authentik
+  AUTHENTIK_POSTGRESQL__NAME: authentik
+  AUTHENTIK_POSTGRESQL__PASSWORD: "{{ authentik_database_password }}"
+  AUTHENTIK_SECRET_KEY: "{{ authentik_secret }}"
+
+container_volumes:
+  - /opt/authentik/media:/media
+  - /opt/authentik/backups:/backups 
+  - /opt/authentik/custom-templates:/templates
+
+container_command: worker

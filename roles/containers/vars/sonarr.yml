@@ -1,0 +1,23 @@
+---
+container_name: sonarr
+
+image: linuxserver/sonarr
+tag: latest
+
+container_directories:
+  - /opt/sonarr
+
+container_ports:
+  - 8989:8989
+
+container_env:
+  PUID: 0
+  PGID: 0
+  TZ: Europe/Vienna
+
+container_volumes:
+  - /opt/sonarr:/config
+  - /mnt/media/tv:/tv
+  - /mnt/media/downloads:/downloads
+
+container_command:

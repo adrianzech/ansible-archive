@@ -1,0 +1,23 @@
+---
+- hosts: all
+  remote_user: adrian
+  become: true
+  roles:
+    - update
+    - common
+    - setup-ssh
+    - mounts
+    - zabbix-agent
+
+- hosts: database
+  remote_user: adrian
+  become: true
+  roles:
+    - postgresql
+
+- hosts: podman
+  remote_user: adrian
+  become: true
+  roles:
+    - podman
+    - containers

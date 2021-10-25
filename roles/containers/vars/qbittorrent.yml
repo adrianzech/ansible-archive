@@ -1,0 +1,22 @@
+---
+container_name: qbittorrent
+
+image: linuxserver/qbittorrent
+tag: latest
+
+container_directories:
+  - /opt/qbittorrent
+
+container_ports:
+  - 8081:8080
+
+container_env:
+  PUID: 0
+  PGID: 0
+  TZ: Europe/Vienna
+
+container_volumes:
+  - /opt/qbittorrent:/config
+  - /mnt/media/downloads:/downloads
+
+container_command:

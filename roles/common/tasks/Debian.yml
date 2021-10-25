@@ -1,0 +1,16 @@
+---
+- name: Add public zone to interface
+  firewalld:
+    zone: public
+    interface: "{{ network_interface }}"
+    permanent: yes
+    immediate: yes
+    state: enabled
+
+- name: Create firewall rule for cockpit
+  firewalld:
+    service: cockpit
+    zone: public
+    state: enabled
+    permanent: yes
+    immediate: yes

@@ -1,0 +1,21 @@
+---
+container_name: freshrss
+
+image: linuxserver/freshrss
+tag: latest
+
+container_directories:
+  - /opt/freshrss
+
+container_ports:
+  - 8081:80
+
+container_env:
+  PUID: 1000
+  PGID: 1000
+  TZ: Europe/Vienna
+
+container_volumes:
+  - /opt/freshrss:/config
+
+container_command:

@@ -1,0 +1,70 @@
+---
+- name: Load variables
+  include_vars: "{{ current_container}}.yml"
+
+- name: Create container directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+    owner: "{{ owner }}"
+    group: "{{ group }}"
+  loop: "{{ container_directories if container_directories is iterable else []}}"
+  
+- name: Create container
+  become: true
+  become_user: "{{ user }}"
+  containers.podman.podman_container:
+    name: "{{ container_name }}"
+    image: "{{ image }}:{{ tag }}"
+    label:
+      io.containers.autoupdate: image
+    command: "{{ container_command }}"
+    ports: "{{ container_ports }}" 
+    env: "{{ container_env }}"
+    volume: "{{ container_volumes }}" 
+    state: started
+    recreate: yes
+    generate_systemd:
+      #container_prefix: ""
+      path: "/home/{{ user }}/.config/systemd/user/"
+      restart_policy: always
+
+- name: Ensure container is running and enabled
+  become: true
+  become_user: "{{ user }}"
+  service:
+    name: "container-{{ container_name }}"
+    daemon_reload: yes
+    enabled: true
+    scope: user
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ myuid }}"
+
+- name: Check if firewall service exists
+  local_action: stat path="{{ role_path }}/files/{{ container_name }}.xml"
+  register: file
+
+- name: Import firewall service
+  copy: 
+    src: "{{ container_name }}.xml"
+    dest: "/etc/firewalld/services/{{ container_name }}.xml"
+    owner: root
+    group: root
+    mode: 0644
+  when: file.stat.exists
+
+- name: Restart firewalld
+  service:
+    name: firewalld
+    state: restarted
+  when: file.stat.exists
+
+- name: Create firewall rule
+  firewalld:
+    service: "{{ container_name }}"
+    zone: public
+    state: enabled
+    permanent: yes
+    immediate: yes
+  when: file.stat.exists

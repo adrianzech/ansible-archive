@@ -1,0 +1,21 @@
+---
+container_name: prowlarr
+
+image: linuxserver/prowlarr
+tag: develop
+
+container_directories:
+  - /opt/prowlarr
+
+container_ports:
+  - 9696:9696
+
+container_env:
+  PUID: 0
+  PGID: 0
+  TZ: Europe/Vienna
+
+container_volumes:
+  - /opt/prowlarr:/config
+
+container_command:

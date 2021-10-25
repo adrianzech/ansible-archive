@@ -1,0 +1,22 @@
+---
+container_name: nextcloud
+
+image: linuxserver/nextcloud
+tag: latest
+
+container_directories:
+  - /opt/nextcloud
+
+container_ports:
+  - 8080:443
+
+container_env:
+  PUID: 1000
+  PGID: 1000
+  TZ: Europe/Vienna
+
+container_volumes:
+  - /opt/nextcloud:/config
+  - /mnt/cloud:/data
+
+container_command:

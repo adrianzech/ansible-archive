@@ -1,0 +1,19 @@
+---
+container_name: home-assistant
+
+image: ghcr.io/home-assistant/home-assistant
+tag: stable
+
+container_directories:
+  - /opt/home-assistant
+
+container_ports:
+  - 8123:8123
+
+container_env:
+  TZ: Europe/Vienna
+
+container_volumes:
+  - /opt/home-assistant:/config
+
+container_command:

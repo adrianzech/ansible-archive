@@ -1,0 +1,23 @@
+---
+container_name: bazarr
+
+image: linuxserver/bazarr
+tag: latest
+
+container_directories:
+  - /opt/bazarr
+
+container_ports:
+  - 6767:6767
+
+container_env:
+  PUID: 0
+  PGID: 0
+  TZ: Europe/Vienna
+
+container_volumes:
+  - /opt/bazarr:/config
+  - /mnt/media/tv:/tv
+  - /mnt/media/movies:/movies
+
+container_command:

@@ -1,0 +1,18 @@
+---
+container_name: uptime-kuma
+
+image: louislam/uptime-kuma
+tag: latest
+
+container_directories:
+  - /opt/uptime-kuma
+
+container_ports:
+  - 3001:3001
+
+container_env:
+
+container_volumes:
+  - /opt/uptime-kuma:/app/data
+
+container_command:

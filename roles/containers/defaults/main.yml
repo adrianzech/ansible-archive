@@ -1,0 +1,50 @@
+---
+user: adrian
+myuid: 1000
+
+owner: adrian
+group: adrian
+
+identity_provider_host: identity-provider
+database_host: database
+monitoring_host: monitoring
+home_host: home
+cloud_host: cloud
+web_host: web
+media_stack_host: media-stack
+
+identity_provider_containers:
+  - authentik-redis
+  - authentik-server
+  - authentik-worker
+  - nginx-proxy-manager-db
+  - nginx-proxy-manager
+
+database_containers:
+  - pgadmin
+
+monitoring_containers:
+  - uptime-kuma
+
+home_containers:
+  - home-assistant
+  - unifi-controller
+
+cloud_containers:
+  - nextcloud-redis
+  - nextcloud
+  - nextcloud-onlyoffice
+
+web_containers:
+  - wiki
+  - dashboard
+  - freshrss
+
+media_stack_containers:
+  - sonarr
+  - radarr
+  - prowlarr
+  - bazarr
+  - sabnzbd
+  - qbittorrent
+  - tautulli
