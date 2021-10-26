@@ -1,0 +1,7 @@
+---
+- name: Restart plex
+  service: 
+    name: "{{ service_name }}"
+    state: restarted
+    enabled: yes
+    daemon_reload: yes

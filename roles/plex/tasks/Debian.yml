@@ -1,0 +1,14 @@
+---
+- name: Add apt key
+  apt_key:
+    url: "{{ apt_key_url }}"
+    state: present
+
+- name: Add plex repo
+  apt_repository:
+    repo: "{{ repo_url }}"
+    state: present
+
+- name: Update cache
+  apt:
+    update_cache: yes

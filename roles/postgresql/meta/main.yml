@@ -19,5 +19,5 @@ galaxy_info:
         - all
 
   galaxy_tags:
-    - monitoring
-    - zabbix
+    - postgresql
+    - database

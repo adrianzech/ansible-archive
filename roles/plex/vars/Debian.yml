@@ -1,0 +1,6 @@
+---
+apt_key_url: https://downloads.plex.tv/plex-keys/PlexSign.key
+repo_url: deb https://downloads.plex.tv/repo/deb public main
+
+plex_path: /var/lib/plexmediaserver
+plex_service_file: /usr/lib/systemd/system/plexmediaserver.service

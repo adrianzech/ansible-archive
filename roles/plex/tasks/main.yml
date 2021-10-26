@@ -1,0 +1,51 @@
+---
+- name: Include os specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Include os specific tasks
+  include_tasks: "{{ ansible_os_family }}.yml"
+
+- name: Install plex
+  package:
+    name: "{{ package_name }}"
+    state: present
+
+- name: Ensure plex is running and enabled
+  service:
+    name: "{{ service_name }}"
+    state: started
+    enabled: true
+
+- name: Change user in service file
+  lineinfile: 
+    dest: "{{ plex_service_file }}"
+    regexp: "^#?User="
+    line: "User={{ owner }}" 
+    state: present
+  notify:
+    - Restart plex
+
+- name: Change group in service file
+  lineinfile: 
+    dest: "{{ plex_service_file }}"
+    regexp: "^#?Group="
+    line: "Group={{ group }}" 
+    state: present
+  notify:
+    - Restart plex
+
+- name: Change plex directory owner and group
+  file:
+    path: "{{ plex_path }}"
+    owner: "{{ owner }}"
+    group: "{{ group }}"
+    state: directory
+    recurse: yes
+
+- name: Create firewall rule
+  firewalld:
+    service: plex
+    zone: public
+    state: enabled
+    permanent: yes
+    immediate: yes

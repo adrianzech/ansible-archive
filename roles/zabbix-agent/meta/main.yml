@@ -21,3 +21,4 @@ galaxy_info:
   galaxy_tags:
     - monitoring
     - zabbix
+    - zabbix-agent

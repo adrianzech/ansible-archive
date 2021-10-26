@@ -3,7 +3,7 @@ dependencies: []
 
 galaxy_info:
   author: Adrian Zech
-  description: Install NFS and MergerFS and mount folders
+  description: Install Plex Media Server
   company: Homelab
 
   license: license (MIT)
@@ -16,8 +16,8 @@ galaxy_info:
         - 8
     - name: Debian
       versions:
-        - bullseye
+        - all
 
   galaxy_tags:
-    - mounts
-    - mergerfs
+    - plex
+    - media

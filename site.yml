@@ -21,3 +21,9 @@
   roles:
     - podman
     - containers
+
+- hosts: media_server
+  remote_user: adrian
+  become: true
+  roles:
+    - plex
