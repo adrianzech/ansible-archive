@@ -16,3 +16,11 @@
     dest: /etc/zabbix/zabbix_agent2.conf
     mode: 0744
   notify: Restart zabbix-agent
+
+- name: Create firewall rule
+  firewalld:
+    service: zabbix-agent
+    zone: public
+    state: enabled
+    permanent: yes
+    immediate: yes
