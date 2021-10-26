@@ -1,7 +1,3 @@
 ---
-package_name: plexmediaserver
-
-service_name: plexmediaserver
-
 owner: adrian
 group: adrian

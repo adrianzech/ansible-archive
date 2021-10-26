@@ -1,6 +1,4 @@
 ---
-repo_url: https://repo.zabbix.com/zabbix/5.4/debian/pool/main/z/zabbix-release/zabbix-release_5.4-1+debian11_all.deb
-
 packages:
   - zabbix-server-pgsql
   - zabbix-frontend-php
@@ -15,6 +13,8 @@ services:
   - zabbix-agent2
   - nginx
   - php7.4-fpm
+
+repo_url: https://repo.zabbix.com/zabbix/5.4/debian/pool/main/z/zabbix-release/zabbix-release_5.4-1+debian11_all.deb
 
 nginx_default_config: /etc/nginx/sites-enabled/default
 nginx_zabbix_config: /etc/nginx/conf.d/zabbix.conf

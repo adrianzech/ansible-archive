@@ -3,7 +3,7 @@ dependencies: []
 
 galaxy_info:
   author: Adrian Zech
-  description: Install and setup PostgreSQL
+  description: Install PostgreSQL
   company: Homelab
 
   license: license (MIT)

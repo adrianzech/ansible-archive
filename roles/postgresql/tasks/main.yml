@@ -2,22 +2,25 @@
 - name: Include os specific variables
   include_vars: "{{ ansible_os_family }}.yml"
 
-- name: Include os specific tasks
-  include_tasks: "{{ ansible_os_family }}.yml"
+- name: Install packages
+  package:
+    name: "{{ packages }}"
+    state: latest
 
 - name: Change listen_adresses
   lineinfile: 
     dest: "{{ postgresql_conf_path }}"
     regexp: "^#?listen_addresses"
-    line: "listen_addresses = '{{ listen_addresses }}'"
+    line: "listen_addresses = '{{ listen_addresses_config }}'"
     state: present
   notify: Restart postgresql
 
 - name: Change listen_adresses
   lineinfile: 
     dest: "{{ pg_hba_conf_path }}"
-    line: "host    all             all             10.0.0.0/16             md5" 
+    line: "host    all             all             {{ item }}             md5" 
     state: present
+  loop: "{{ listen_addresses }}"
   notify: Restart postgresql
 
 - name: Flush handlers

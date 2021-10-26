@@ -8,7 +8,7 @@
 - name: Install plex
   package:
     name: "{{ package_name }}"
-    state: present
+    state: latest
 
 - name: Ensure plex is running and enabled
   service:

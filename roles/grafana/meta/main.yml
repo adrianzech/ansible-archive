@@ -3,7 +3,7 @@ dependencies: []
 
 galaxy_info:
   author: Adrian Zech
-  description: Install Plex Media Server
+  description: Install GRafana
   company: Homelab
 
   license: license (MIT)
@@ -16,5 +16,5 @@ galaxy_info:
         - all
 
   galaxy_tags:
-    - plex
-    - media
+    - grafana
+    - monitoring

@@ -3,7 +3,7 @@ dependencies: []
 
 galaxy_info:
   author: Adrian Zech
-  description: Install Grafana
+  description: Mount nfs shares and mergerfs
   company: Homelab
 
   license: license (MIT)
@@ -16,5 +16,5 @@ galaxy_info:
         - bullseye
 
   galaxy_tags:
-    - grafana
-    - monitoring
+    - mount
+    - mergerfs

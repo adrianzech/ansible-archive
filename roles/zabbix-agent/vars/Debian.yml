@@ -1,2 +1,5 @@
 ---
+package_name: zabbix-agent2
+service_name: zabbix-agent2
+
 repo_url: https://repo.zabbix.com/zabbix/5.4/debian/pool/main/z/zabbix-release/zabbix-release_5.4-1+debian11_all.deb

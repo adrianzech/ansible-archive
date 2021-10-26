@@ -7,7 +7,7 @@
     name: 
     - podman
     - cockpit-podman
-    state: present
+    state: latest
   notify: Reboot machine
 
 - name: Flush handlers

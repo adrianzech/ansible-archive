@@ -8,7 +8,7 @@
 - name: Install grafana
   package:
     name: "{{ package_name }}"
-    state: present
+    state: latest
 
 - name: Ensure grafana is running and enabled
   service:

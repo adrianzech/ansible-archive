@@ -1,8 +1,4 @@
 ---
-package_name: grafana
-
-service_name: grafana-server
-
 domain: monitoring.zech.co
 
 oauth_auto_login: false

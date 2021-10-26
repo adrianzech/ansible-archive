@@ -1,5 +1,8 @@
 ---
-listen_addresses: '*'
+listen_addresses_config: '*'
+
+listen_addresses:
+  - 10.0.0.0/16
 
 databases:
   - { database: nextcloud, user: nextcloud, password: "{{ nextcloud_database_password }}" }
