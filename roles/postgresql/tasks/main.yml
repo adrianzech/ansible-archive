@@ -11,12 +11,17 @@
     regexp: "^#?listen_addresses"
     line: "listen_addresses = '{{ listen_addresses }}'"
     state: present
+  notify: Restart postgresql
 
 - name: Change listen_adresses
   lineinfile: 
     dest: "{{ pg_hba_conf_path }}"
     line: "host    all             all             10.0.0.0/16             md5" 
     state: present
+  notify: Restart postgresql
+
+- name: Flush handlers
+  meta: flush_handlers
 
 - name: Ensure postgresql is running and enabled
   service:
@@ -55,3 +60,11 @@
     privs: ALL
     type: database
   loop: "{{ databases }}"
+
+- name: Create firewall rule
+  firewalld:
+    service: postgresql
+    zone: public
+    state: enabled
+    permanent: yes
+    immediate: yes

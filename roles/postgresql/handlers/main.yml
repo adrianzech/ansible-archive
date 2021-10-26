@@ -1,7 +1,5 @@
 ---
-- name: Restart zabbix-agent
+- name: Restart postgresql
   service: 
     name: "{{ service_name }}"
     state: restarted
-    daemon-reload: yes
-    enabled: yes
