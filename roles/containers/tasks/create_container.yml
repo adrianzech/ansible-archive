@@ -25,19 +25,42 @@
     volume: "{{ container_volumes }}" 
     state: started
     recreate: yes
-    generate_systemd:
+    # Waiting for --new support for service files
+    #generate_systemd:
       #container_prefix: ""
-      path: "/home/{{ user }}/.config/systemd/user/"
-      restart_policy: always
+      #path: "/home/{{ user }}/.config/systemd/user/"
+      #restart_policy: always
+
+- name: Stop container
+  become: true
+  become_user: "{{ user }}"
+  containers.podman.podman_container:
+    name: "{{ container_name }}"
+    state: stopped
+
+- name: Create systemd user directory
+  file:
+    path: "/home/{{ user }}/.config/systemd/user/"
+    state: directory
+    mode: 0755
+    owner: "{{ owner }}"
+    group: "{{ group }}"
+
+- name: Create systemd service file
+  become: true
+  become_user: "{{ user }}"
+  shell: "podman generate systemd --new --name {{ container_name }} | tee /home/{{ user }}/.config/systemd/user/{{ container_name }}.service"
 
 - name: Ensure container is running and enabled
   become: true
   become_user: "{{ user }}"
   service:
-    name: "container-{{ container_name }}"
+    name: "{{ container_name }}"
     daemon_reload: yes
+    state: started
     enabled: true
     scope: user
+    masked: no
   environment:
     XDG_RUNTIME_DIR: "/run/user/{{ myuid }}"
 

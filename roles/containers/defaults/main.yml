@@ -10,7 +10,7 @@ database_host: database
 monitoring_host: monitoring
 home_host: home
 cloud_host: cloud
-web_host: web
+web_host: debian-testing-1
 media_stack_host: media-stack
 
 identity_provider_containers:
