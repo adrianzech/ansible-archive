@@ -15,6 +15,12 @@
   roles:
     - postgresql
 
+- hosts: monitoring
+  remote_user: adrian
+  become: true
+  roles:
+    - zabbix-server
+    
 - hosts: podman
   remote_user: adrian
   become: true

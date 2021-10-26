@@ -10,6 +10,12 @@
     name: "{{ package_name }}"
     state: latest
 
+- name: Ensure zabbix-agent is running and enabled
+  service:
+    name: "{{ service_name }}"
+    state: started
+    enabled: true
+
 - name: Install zabbix-agent config from template
   template:
     src: zabbix_agent2.conf.j2
