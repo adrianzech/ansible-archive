@@ -1,0 +1,15 @@
+---
+package_name: grafana
+
+service_name: grafana-server
+
+domain: monitoring.zech.co
+
+oauth_auto_login: false
+
+scopes: openid email profile
+signout_redirect_url: https://sso.zech.co/application/o/grafana/end-session/
+auth_url: https://sso.zech.co/application/o/authorize/
+token_url: https://sso.zech.co/application/o/token/
+api_url: https://sso.zech.co/application/o/userinfo/
+role_attribute_path: "contains(groups[*], 'Grafana Admins') && 'Admin' || contains(groups[*], 'Grafana Editors') && 'Editor' || 'Viewer'"

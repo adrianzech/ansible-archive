@@ -1,0 +1,40 @@
+---
+- name: Include os specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Include os specific tasks
+  include_tasks: "{{ ansible_os_family }}.yml"
+
+- name: Install grafana
+  package:
+    name: "{{ package_name }}"
+    state: present
+
+- name: Ensure grafana is running and enabled
+  service:
+    name: "{{ service_name }}"
+    state: started
+    enabled: true
+
+- name: Install zabbix plugin 
+  community.grafana.grafana_plugin:
+    name: alexanderzobnin-zabbix-app
+    version: latest
+    state: present
+  notify:
+    - Restart grafana
+
+- name: Install grafana.ini from template
+  template:
+    src: grafana.ini.j2
+    dest: "{{ grafana_ini }}"
+    mode: 0640
+  notify: Restart grafana
+
+- name: Create firewall rule
+  firewalld:
+    service: grafana
+    zone: public
+    state: enabled
+    permanent: yes
+    immediate: yes
