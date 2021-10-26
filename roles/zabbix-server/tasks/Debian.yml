@@ -1,0 +1,8 @@
+---
+- name: Add zabbix repo
+  apt:
+    deb: "{{ repo_url }}"
+
+- name: Update cache
+  apt:
+    update_cache: yes

@@ -1,0 +1,66 @@
+---
+- name: Include os specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Include os specific tasks
+  include_tasks: "{{ ansible_os_family }}.yml"
+
+- name: Install packages
+  package:
+    name: "{{ packages }}"
+    state: latest
+
+- name: Ensure services are running and enabled
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  loop: "{{ services }}"
+
+- name: Install zabbix-server config from template
+  template:
+    src: zabbix_server.conf.j2
+    dest: /etc/zabbix/zabbix_server.conf
+    mode: 0744
+  notify: Restart services
+
+- name: Import database schema
+  shell: "zcat /usr/share/doc/zabbix-sql-scripts/postgresql/create.sql.gz | sudo -u {{ database_user }} psql postgresql://{{ database_user }}:'{{ zabbix_database_password }}'@{{ database_host }}:5432 {{ database_name }}"
+
+- name: Delete default nginx site
+  file:
+    path: "{{ nginx_default_config }}"
+    state: absent
+
+- name: Configure nginx zabbix config 
+  lineinfile: 
+    dest: "{{ nginx_zabbix_config }}"
+    regexp: "^#?        listen          80;"
+    line: "        listen          80;"
+    state: present
+  notify:
+    - Restart services
+
+- name: Create firewall rule for nginx
+  firewalld:
+    service: http
+    zone: public
+    state: enabled
+    permanent: yes
+    immediate: yes
+
+- name: Create firewall rule for zabbix-agent
+  firewalld:
+    service: zabbix-agent
+    zone: public
+    state: enabled
+    permanent: yes
+    immediate: yes
+
+- name: Create firewall rule for zabbix-server
+  firewalld:
+    service: zabbix-server
+    zone: public
+    state: enabled
+    permanent: yes
+    immediate: yes
