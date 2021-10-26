@@ -5,7 +5,6 @@ cloud_servers:
 media_servers:
   - media-server
   - media-stack
-  - debian-testing-2
 
 cloud_mount_point: /mnt/cloud
 cloud_share: 10.0.1.100:/cloud
