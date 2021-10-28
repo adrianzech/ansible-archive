@@ -16,7 +16,7 @@
     state: started
     enabled: true
 
-- name: Install zabbix plugin 
+- name: Install zabbix plugin
   community.grafana.grafana_plugin:
     name: alexanderzobnin-zabbix-app
     version: latest
@@ -36,5 +36,5 @@
     service: grafana
     zone: public
     state: enabled
-    permanent: yes
-    immediate: yes
+    permanent: true
+    immediate: true

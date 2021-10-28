@@ -5,8 +5,8 @@ listen_addresses:
   - 10.0.0.0/16
 
 databases:
-  - { database: nextcloud, user: nextcloud, password: "{{ nextcloud_database_password }}" }
-  - { database: authentik, user: authentik, password: "{{ authentik_database_password }}" }
-  - { database: wiki, user: wiki, password: "{{ wiki_database_password }}" }
-  - { database: zabbix, user: zabbix, password: "{{ zabbix_database_password }}" }
-  - { database: freshrss, user: freshrss, password: "{{ freshrss_database_password }}" }
+  - {database: nextcloud, user: nextcloud, password: "{{ nextcloud_database_password }}"}
+  - {database: authentik, user: authentik, password: "{{ authentik_database_password }}"}
+  - {database: wiki, user: wiki, password: "{{ wiki_database_password }}"}
+  - {database: zabbix, user: zabbix, password: "{{ zabbix_database_password }}"}
+  - {database: freshrss, user: freshrss, password: "{{ freshrss_database_password }}"}

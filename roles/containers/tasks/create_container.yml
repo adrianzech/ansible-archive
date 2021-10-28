@@ -1,6 +1,6 @@
 ---
 - name: Load variables
-  include_vars: "{{ current_container}}.yml"
+  include_vars: "{{ current_container }}.yml"
 
 - name: Create container directories
   file:
@@ -9,8 +9,8 @@
     mode: 0755
     owner: "{{ owner }}"
     group: "{{ group }}"
-  loop: "{{ container_directories if container_directories is iterable else []}}"
-  
+  loop: "{{ container_directories if container_directories is iterable else [] }}"
+
 - name: Create container
   become: true
   become_user: "{{ user }}"
@@ -20,11 +20,11 @@
     label:
       io.containers.autoupdate: image
     command: "{{ container_command }}"
-    ports: "{{ container_ports }}" 
+    ports: "{{ container_ports }}"
     env: "{{ container_env }}"
-    volume: "{{ container_volumes }}" 
+    volume: "{{ container_volumes }}"
     state: created
-    recreate: yes
+    recreate: true
 
 - name: Create systemd user directory
   file:
@@ -42,27 +42,31 @@
 - name: Create systemd service file
   become: true
   become_user: "{{ user }}"
-  shell: "podman generate systemd --new --name {{ container_name }} | tee /home/{{ user }}/.config/systemd/user/{{ container_name }}.service"
+  command: "podman generate systemd --new --name {{ container_name }} | tee /home/{{ user }}/.config/systemd/user/{{ container_name }}.service"
+  args:
+    creates: /home/{{ user }}/.config/systemd/user/{{ container_name }}.service
 
 - name: Ensure container is running and enabled
   become: true
   become_user: "{{ user }}"
   service:
     name: "{{ container_name }}"
-    daemon_reload: yes
+    daemon_reload: true
     state: started
     enabled: true
     scope: user
-    masked: no
+    masked: false
   environment:
     XDG_RUNTIME_DIR: "/run/user/{{ myuid }}"
 
 - name: Check if firewall service exists
-  local_action: stat path="{{ role_path }}/files/{{ container_name }}.xml"
+  delegate_to: localhost
+  stat:
+    path: "{{ role_path }}/files/{{ container_name }}.xml"
   register: file
 
 - name: Import firewall service
-  copy: 
+  copy:
     src: "{{ container_name }}.xml"
     dest: "/etc/firewalld/services/{{ container_name }}.xml"
     owner: root
@@ -81,6 +85,6 @@
     service: "{{ container_name }}"
     zone: public
     state: enabled
-    permanent: yes
-    immediate: yes
+    permanent: true
+    immediate: true
   when: file.stat.exists

@@ -1,6 +1,6 @@
 ---
 - name: Restart services
-  service: 
+  service:
     name: "{{ item }}"
     state: restarted
   loop: "{{ services }}"

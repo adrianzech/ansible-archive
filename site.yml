@@ -5,9 +5,9 @@
   roles:
     - update
     - common
-    - setup-ssh
+    - setup_ssh
     - mounts
-    - zabbix-agent
+    - zabbix_agent
 
 - hosts: database
   remote_user: adrian
@@ -19,8 +19,8 @@
   remote_user: adrian
   become: true
   roles:
-    - zabbix-server
-    
+    - zabbix_server
+
 - hosts: podman
   remote_user: adrian
   become: true

@@ -3,7 +3,7 @@ packages:
   - postgresql
   - python3-psycopg2
   - acl
-  
+
 service_name: postgresql
 
 postgresql_conf_path: /etc/postgresql/13/main/postgresql.conf

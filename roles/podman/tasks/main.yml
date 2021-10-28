@@ -1,12 +1,13 @@
 ---
 - name: Enable linger
-  shell: "loginctl enable-linger  {{ user }}"
+  command: "loginctl enable-linger  {{ user }}"
+  changed_when: test_grep.changed == true
 
 - name: Install podman
   package:
-    name: 
-    - podman
-    - cockpit-podman
+    name:
+      - podman
+      - cockpit-podman
     state: latest
   notify: Reboot machine
 

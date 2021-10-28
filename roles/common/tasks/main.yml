@@ -32,6 +32,6 @@
 - name: Remove dhcpv6-client firewall rule
   firewalld:
     service: dhcpv6-client
-    permanent: yes
-    immediate: yes
+    permanent: true
+    immediate: true
     state: disabled

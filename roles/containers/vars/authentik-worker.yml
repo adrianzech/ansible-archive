@@ -21,7 +21,7 @@ container_env:
 
 container_volumes:
   - /opt/authentik/media:/media
-  - /opt/authentik/backups:/backups 
+  - /opt/authentik/backups:/backups
   - /opt/authentik/custom-templates:/templates
 
 container_command: worker

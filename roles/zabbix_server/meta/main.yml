@@ -3,7 +3,7 @@ dependencies: []
 
 galaxy_info:
   author: Adrian Zech
-  description: Install Zabbix Agent
+  description: Install Zabbix Server
   company: Homelab
 
   license: license (MIT)
@@ -11,12 +11,10 @@ galaxy_info:
   min_ansible_version: 2.9
 
   platforms:
-
     - name: Debian
       versions:
-        - all
+        - bullseye
 
   galaxy_tags:
     - monitoring
     - zabbix
-    - zabbix-agent

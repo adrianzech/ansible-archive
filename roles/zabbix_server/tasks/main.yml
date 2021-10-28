@@ -25,15 +25,19 @@
   notify: Restart services
 
 - name: Import database schema
-  shell: "zcat /usr/share/doc/zabbix-sql-scripts/postgresql/create.sql.gz | sudo -u {{ database_user }} psql postgresql://{{ database_user }}:'{{ zabbix_database_password }}'@{{ database_host }}:5432 {{ database_name }}"
+  command: |
+    "zcat /usr/share/doc/zabbix-sql-scripts/postgresql/create.sql.gz |
+     sudo -u {{ database_user }} psql postgresql://{{ database_user }}:'{{ zabbix_database_password }}'@{{ database_host }}:5432 {{ database_name }}"
+  register: result
+  changed_when: result.rc != 0
 
 - name: Delete default nginx site
   file:
     path: "{{ nginx_default_config }}"
     state: absent
 
-- name: Configure nginx zabbix config 
-  lineinfile: 
+- name: Configure nginx zabbix config
+  lineinfile:
     dest: "{{ nginx_zabbix_config }}"
     regexp: "^#?        listen          80;"
     line: "        listen          80;"
@@ -46,21 +50,21 @@
     service: http
     zone: public
     state: enabled
-    permanent: yes
-    immediate: yes
+    permanent: true
+    immediate: true
 
 - name: Create firewall rule for zabbix-agent
   firewalld:
     service: zabbix-agent
     zone: public
     state: enabled
-    permanent: yes
-    immediate: yes
+    permanent: true
+    immediate: true
 
 - name: Create firewall rule for zabbix-server
   firewalld:
     service: zabbix-server
     zone: public
     state: enabled
-    permanent: yes
-    immediate: yes
+    permanent: true
+    immediate: true

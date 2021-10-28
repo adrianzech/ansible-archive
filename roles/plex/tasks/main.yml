@@ -17,19 +17,19 @@
     enabled: true
 
 - name: Change user in service file
-  lineinfile: 
+  lineinfile:
     dest: "{{ plex_service_file }}"
     regexp: "^#?User="
-    line: "User={{ owner }}" 
+    line: "User={{ owner }}"
     state: present
   notify:
     - Restart plex
 
 - name: Change group in service file
-  lineinfile: 
+  lineinfile:
     dest: "{{ plex_service_file }}"
     regexp: "^#?Group="
-    line: "Group={{ group }}" 
+    line: "Group={{ group }}"
     state: present
   notify:
     - Restart plex
@@ -40,12 +40,12 @@
     owner: "{{ owner }}"
     group: "{{ group }}"
     state: directory
-    recurse: yes
+    recurse: true
 
 - name: Create firewall rule
   firewalld:
     service: plex
     zone: public
     state: enabled
-    permanent: yes
-    immediate: yes
+    permanent: true
+    immediate: true

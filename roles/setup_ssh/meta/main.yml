@@ -3,7 +3,7 @@ dependencies: []
 
 galaxy_info:
   author: Adrian Zech
-  description: Install Zabbix Server
+  description: Configure SSH
   company: Homelab
 
   license: license (MIT)
@@ -13,9 +13,7 @@ galaxy_info:
   platforms:
     - name: Debian
       versions:
-        - all
+        - bullseye
 
   galaxy_tags:
-    - monitoring
-    - zabbix
-    - zabbix-server
+    - ssh

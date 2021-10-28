@@ -12,7 +12,7 @@ container_ports:
 container_env:
   PGADMIN_DEFAULT_EMAIL: 'adrian@zech.co'
   PGADMIN_DEFAULT_PASSWORD: "{{ pgadmin_password }}"
-  PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: True
+  PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: true
   PGADMIN_CONFIG_CONSOLE_LOG_LEVEL: 10
 
 container_volumes:

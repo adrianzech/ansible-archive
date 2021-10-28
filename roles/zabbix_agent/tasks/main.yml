@@ -28,5 +28,5 @@
     service: zabbix-agent
     zone: public
     state: enabled
-    permanent: yes
-    immediate: yes
+    permanent: true
+    immediate: true

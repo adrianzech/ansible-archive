@@ -11,21 +11,27 @@ identity_provider:
   - authentik-worker
   - nginx-proxy-manager-db
   - nginx-proxy-manager
+
 database:
   - pgadmin
-debian-testing-2:
+
+monitoring:
   - uptime-kuma
+
 home:
   - home-assistant
   - unifi-controller
+
 cloud:
   - nextcloud-redis
   - nextcloud
   - nextcloud-onlyoffice
-debian-testing-1:
+
+web:
   - wiki
   - dashboard
   - freshrss
+
 media_stack:
   - sonarr
   - radarr

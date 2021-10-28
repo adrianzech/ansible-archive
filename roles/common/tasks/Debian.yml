@@ -3,8 +3,8 @@
   firewalld:
     zone: public
     interface: "{{ network_interface }}"
-    permanent: yes
-    immediate: yes
+    permanent: true
+    immediate: true
     state: enabled
 
 - name: Create firewall rule for cockpit
@@ -12,5 +12,5 @@
     service: cockpit
     zone: public
     state: enabled
-    permanent: yes
-    immediate: yes
+    permanent: true
+    immediate: true
