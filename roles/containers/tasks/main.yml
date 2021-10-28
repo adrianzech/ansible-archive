@@ -1,63 +1,8 @@
 ---
-- name: Identity-Provider containers
+- name: Create containers accoring to hostname
   include_tasks: create_container.yml
   vars:
     - current_container: "{{ current_container_item }}"
-  loop: "{{ identity_provider_containers }}"
+  loop: "{{ lookup('vars', ansible_hostname) }}"
   loop_control:
     loop_var: current_container_item
-  when: ansible_hostname == identity_provider_host
-
-- name: Database containers
-  include_tasks: create_container.yml
-  vars:
-    - current_container: "{{ current_container_item }}"
-  loop: "{{ database_containers }}"
-  loop_control:
-    loop_var: current_container_item
-  when: ansible_hostname == database_host
-
-- name: Monitoring containers
-  include_tasks: create_container.yml
-  vars:
-    - current_container: "{{ current_container_item }}"
-  loop: "{{ monitoring_containers }}"
-  loop_control:
-    loop_var: current_container_item
-  when: ansible_hostname == monitoring_host
-
-- name: Home containers
-  include_tasks: create_container.yml
-  vars:
-    - current_container: "{{ current_container_item }}"
-  loop: "{{ home_containers }}"
-  loop_control:
-    loop_var: current_container_item
-  when: ansible_hostname == home_host
-
-- name: Cloud containers
-  include_tasks: create_container.yml
-  vars:
-    - current_container: "{{ current_container_item }}"
-  loop: "{{ cloud_containers }}"
-  loop_control:
-    loop_var: current_container_item
-  when: ansible_hostname == cloud_host
-
-- name: Web containers
-  include_tasks: create_container.yml
-  vars:
-    - current_container: "{{ current_container_item }}"
-  loop: "{{ web_containers }}"
-  loop_control:
-    loop_var: current_container_item
-  when: ansible_hostname == web_host
-  
-- name: Media-Stack containers
-  include_tasks: create_container.yml
-  vars:
-    - current_container: "{{ current_container_item }}"
-  loop: "{{ media_stack_containers }}"
-  loop_control:
-    loop_var: current_container_item
-  when: ansible_hostname == media_stack_host

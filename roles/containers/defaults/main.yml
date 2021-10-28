@@ -5,42 +5,28 @@ myuid: 1000
 owner: adrian
 group: adrian
 
-identity_provider_host: identity-provider
-database_host: database
-monitoring_host: monitoring
-home_host: home
-cloud_host: cloud
-web_host: web
-media_stack_host: media-stack
-
-identity_provider_containers:
+identity_provider:
   - authentik-redis
   - authentik-server
   - authentik-worker
   - nginx-proxy-manager-db
   - nginx-proxy-manager
-
-database_containers:
+database:
   - pgadmin
-
-monitoring_containers:
+debian-testing-2:
   - uptime-kuma
-
-home_containers:
+home:
   - home-assistant
   - unifi-controller
-
-cloud_containers:
+cloud:
   - nextcloud-redis
   - nextcloud
   - nextcloud-onlyoffice
-
-web_containers:
+debian-testing-1:
   - wiki
   - dashboard
   - freshrss
-
-media_stack_containers:
+media_stack:
   - sonarr
   - radarr
   - prowlarr
