@@ -12,6 +12,7 @@ packages:
   - cockpit-pcp
   - qemu-guest-agent
   - unzip
+  - htop
 
 vimrc_path: /etc/vim/vimrc
 
