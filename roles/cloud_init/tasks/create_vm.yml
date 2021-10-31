@@ -1,0 +1,81 @@
+---
+- name: Load variables
+  include_vars: "{{ current_vm }}.yml"
+
+- name: Create vm from template
+  proxmox_kvm:
+    node: "{{ proxmox_node }}"
+    api_user: "{{ proxmox_user }}"
+    api_password: "{{ proxmox_password }}"
+    api_host: "{{ proxmox_host }}"
+    clone: "{{ template_vm_name }}"
+    vmid: "{{ template_vm_id }}"
+    name: "{{ vm_name }}"
+    newid: "{{ vm_id }}"
+    scsihw: virtio-scsi-pci
+    ide:
+      ide2: "{{ vm_storage }}:cloudinit"
+    bootdisk: scsi0
+    vga: qxl
+
+- name: Update vm
+  proxmox_kvm:
+    node: "{{ proxmox_node }}"
+    api_user: "{{ proxmox_user }}"
+    api_password: "{{ proxmox_password }}"
+    api_host: "{{ proxmox_host }}"
+    vmid: "{{ vm_id }}"
+    name: "{{ vm_name }}"
+    ciuser: "{{ cloud_init_user }}"
+    cipassword: "{{ cloud_init_password }}"
+    agent: true
+    onboot: true
+    scsihw: virtio-scsi-pci
+    ide:
+      ide2: "{{ vm_storage }}:cloudinit"
+    bootdisk: scsi0
+    vga: qxl
+    memory: "{{ vm_memory }}"
+    sockets: "{{ vm_sockets }}"
+    cores: "{{ vm_cores }}"
+    sshkeys: "{{ ssh_key }}"
+    searchdomains: "{{ vm_searchdomains }}"
+    nameservers: "{{ vm_nameserver }}"
+    net:
+      net0: "virtio,bridge={{ vm_bridge }},tag={{ vm_vlan_tag }}"
+    ipconfig:
+      ipconfig0: "ip={{ vm_ip_address }}/{{ vm_subnetmask }},gw={{ vm_gateway }}"
+    update: true
+
+- name: Authentication
+  uri:
+    url: "https://{{ proxmox_host }}:8006/api2/json/access/ticket"
+    method: POST
+    validate_certs: false
+    body_format: form-urlencoded
+    body:
+      username: "{{ proxmox_user }}"
+      password: "{{ proxmox_password }}"
+  register: auth
+
+- name: Resize disk
+  uri:
+    url: "https://{{ proxmox_host }}:8006/api2/json/nodes/{{ proxmox_node }}/qemu/{{ vm_id }}/resize"
+    method: PUT
+    validate_certs: false
+    headers:
+      Cookie: "PVEAuthCookie={{ auth.json.data.ticket }}"
+      CSRFPreventionToken: "{{ auth.json.data.CSRFPreventionToken }}"
+    body_format: form-urlencoded
+    body:
+      disk: scsi0
+      size: "+{{ vm_disk_size - 2 }}G"
+
+- name: Start vm
+  proxmox_kvm:
+    node: "{{ proxmox_node }}"
+    api_user: "{{ proxmox_user }}"
+    api_password: "{{ proxmox_password }}"
+    api_host: "{{ proxmox_host }}"
+    name: "{{ vm_name }}"
+    state: started

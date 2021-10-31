@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: all:!proxmox
   remote_user: adrian
   become: true
   roles:

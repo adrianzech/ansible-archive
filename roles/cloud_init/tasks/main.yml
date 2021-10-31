@@ -1,0 +1,96 @@
+---
+- name: Install packages
+  package:
+    name:
+      - python3-pip
+      - python3-venv
+      - python3-setuptools
+    state: latest
+
+- name: Install python modules
+  pip:
+    name:
+      - requests
+      - proxmoxer
+
+- name: Delete old cloud image
+  file:
+    path: "{{ cloud_image_path }}"
+    state: absent
+
+- name: Download cloud image
+  get_url:
+    url: "{{ cloud_image_url }}"
+    dest: "{{ cloud_image_path }}"
+
+- name: Create new vm using cloud-init
+  proxmox_kvm:
+    node: "{{ proxmox_node }}"
+    api_user: "{{ proxmox_user }}"
+    api_password: "{{ proxmox_password }}"
+    api_host: "{{ proxmox_host }}"
+    name: "{{ template_vm_name }}"
+    vmid: "{{ template_vm_id }}"
+    ciuser: "{{ cloud_init_user }}"
+    cipassword: "{{ cloud_init_password }}"
+    agent: true
+    onboot: true
+    ide:
+      ide2: "{{ vm_storage }}:cloudinit"
+    bootdisk: scsi0
+    vga: qxl
+    memory: "{{ vm_memory }}"
+    sockets: "{{ vm_sockets }}"
+    cores: "{{ vm_cores }}"
+    sshkeys: "{{ ssh_key }}"
+    searchdomains: "{{ vm_searchdomains }}"
+    nameservers: "{{ vm_nameserver }}"
+    net:
+      net0: "virtio,bridge={{ vm_bridge }},tag={{ vm_vlan_tag }}"
+    ipconfig:
+      ipconfig0: "ip={{ vm_ip_address }}/{{ vm_subnetmask }},gw={{ vm_gateway }}"
+
+- name: Import disk
+  command:
+    cmd: "qm importdisk {{ template_vm_id }} {{ cloud_image }} {{ vm_storage }}"
+    creates: "/dev/mapper/{{ vm_storage }}-vm--{{ template_vm_id }}--disk--0"
+
+- name: Attach disk
+  command: "qm set {{ template_vm_id }} --scsihw virtio-scsi-pci --scsi0 {{ vm_storage }}:vm-{{ template_vm_id }}-disk-0"
+  register: output
+  changed_when: output.changed == true
+
+- name: Create cloud-init template
+  proxmox_kvm:
+    node: "{{ proxmox_node }}"
+    api_user: "{{ proxmox_user }}"
+    api_password: "{{ proxmox_password }}"
+    api_host: "{{ proxmox_host }}"
+    name: "{{ template_vm_name }}"
+    vmid: "{{ template_vm_id }}"
+    ciuser: "{{ cloud_init_user }}"
+    cipassword: "{{ cloud_init_password }}"
+    agent: true
+    onboot: true
+    scsihw: virtio-scsi-pci
+    ide:
+      ide2: "{{ vm_storage }}:cloudinit"
+    bootdisk: scsi0
+    vga: qxl
+    memory: "{{ vm_memory }}"
+    sockets: "{{ vm_sockets }}"
+    cores: "{{ vm_cores }}"
+    sshkeys: "{{ ssh_key }}"
+    searchdomains: "{{ vm_searchdomains }}"
+    nameservers: "{{ vm_nameserver }}"
+    net:
+      net0: "virtio,bridge={{ vm_bridge }},tag={{ vm_vlan_tag }}"
+      ipconfig0: "ip={{ vm_ip_address }}/{{ vm_subnetmask }},gw={{ vm_gateway }}"
+    template: true
+    update: true
+
+- name: Create vm's
+  include_tasks: create_vm.yml
+  vars:
+    - current_vm: "{{ item }}"
+  loop: "{{ virtual_machines }}"

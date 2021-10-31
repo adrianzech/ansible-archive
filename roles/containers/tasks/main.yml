@@ -1,5 +1,5 @@
 ---
-- name: Create containers accoring to hostname
+- name: Create containers according to hostname
   include_tasks: create_container.yml
   vars:
     - current_container: "{{ current_container_item }}"

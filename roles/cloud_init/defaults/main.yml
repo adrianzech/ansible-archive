@@ -1,0 +1,42 @@
+---
+cloud_image: debian-11-genericcloud-amd64.qcow2
+cloud_image_url: https://cloud.debian.org/images/cloud/bullseye/latest/debian-11-genericcloud-amd64.qcow2
+cloud_image_path: /root/debian-11-genericcloud-amd64.qcow2
+
+proxmox_host: 10.0.1.10
+proxmox_user: root@pam
+
+proxmox_node: pve
+
+cloud_init_user: adrian
+ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF3rbf7VtH9qq4Cbx51CiT5p/SbkWopj+qVlKYAXpEcZ adrian@zech.co
+
+vm_storage: storage
+
+template_vm_name: cloud-init-template
+template_vm_id: 9000
+
+vm_name: cloud-init-1
+vm_id: 5000
+vm_memory: 2048
+vm_sockets: 2
+vm_cores: 2
+vm_disk_size: 20
+vm_vlan_tag: 10
+vm_bridge: vmbr0
+vm_nameserver: 10.0.10.1
+vm_gateway: 10.0.10.1
+vm_ip_address: 10.0.10.10
+vm_subnetmask: 24
+vm_searchdomains: zech.lab
+
+virtual_machines:
+    - identity-provider
+    - database
+    - monitoring
+    - home
+    - cloud
+    - web
+    - media-server
+    - media-stack
+    - management

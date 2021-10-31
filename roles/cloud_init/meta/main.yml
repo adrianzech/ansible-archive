@@ -1,0 +1,20 @@
+---
+dependencies: []
+
+galaxy_info:
+  author: Adrian Zech
+  description: Deploy Proxmox VMs with Cloud-Init
+  company: Homelab
+
+  license: license (MIT)
+
+  min_ansible_version: 2.9
+
+  platforms:
+    - name: Debian
+      versions:
+        - bullseye
+
+  galaxy_tags:
+    - proxmox
+    - cloudinit
