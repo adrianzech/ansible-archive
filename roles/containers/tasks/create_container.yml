@@ -18,7 +18,7 @@
     name: "{{ container_name }}"
     image: "{{ image }}:{{ tag }}"
     label:
-      io.containers.autoupdate: image
+      io.containers.autoupdate: registry
     command: "{{ container_command }}"
     ports: "{{ container_ports }}"
     env: "{{ container_env }}"
