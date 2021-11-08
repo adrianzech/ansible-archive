@@ -58,6 +58,18 @@
       password: "{{ proxmox_password }}"
   register: auth
 
+- name: Change vlan tag
+  uri:
+    url: "https://{{ proxmox_host }}:8006/api2/json/nodes/{{ proxmox_node }}/qemu/{{ vm_id }}/config"
+    method: PUT
+    validate_certs: false
+    headers:
+      Cookie: "PVEAuthCookie={{ auth.json.data.ticket }}"
+      CSRFPreventionToken: "{{ auth.json.data.CSRFPreventionToken }}"
+    body_format: form-urlencoded
+    body:
+      net0: "virtio,bridge={{ vm_bridge }},tag={{ vm_vlan_tag }}"
+
 - name: Resize disk
   uri:
     url: "https://{{ proxmox_host }}:8006/api2/json/nodes/{{ proxmox_node }}/qemu/{{ vm_id }}/resize"

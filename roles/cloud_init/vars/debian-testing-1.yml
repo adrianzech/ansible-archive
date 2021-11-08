@@ -1,0 +1,13 @@
+vm_name: debian-testing-1
+vm_id: 3100
+vm_memory: 2048
+vm_sockets: 2
+vm_cores: 2
+vm_disk_size: 20
+vm_vlan_tag: 30
+vm_bridge: vmbr0
+vm_nameserver: 10.0.30.1
+vm_gateway: 10.0.30.1
+vm_ip_address: 10.0.30.100
+vm_subnetmask: 24
+vm_searchdomains: zech.lab
