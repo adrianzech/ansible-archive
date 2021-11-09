@@ -39,12 +39,18 @@
     path: "/home/{{ user }}/.config/systemd/user/{{ container_name }}.service"
     state: absent
 
-- name: Create systemd service file
+- name: Generate systemd service file
   become: true
   become_user: "{{ user }}"
-  command: "podman generate systemd --new --name {{ container_name }} | tee /home/{{ user }}/.config/systemd/user/{{ container_name }}.service"
-  args:
-    creates: /home/{{ user }}/.config/systemd/user/{{ container_name }}.service
+  command: "podman generate systemd --new --name {{ container_name }}"
+  register: service_file
+
+- name: Create systemd service file´
+  become: true
+  become_user: "{{ user }}"
+  copy:
+    content: "{{ service_file.stdout }}"
+    dest: "/home/{{ user }}/.config/systemd/user/{{ container_name }}.service"
 
 - name: Ensure container is running and enabled
   become: true
