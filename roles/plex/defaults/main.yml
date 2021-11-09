@@ -1,3 +1,10 @@
 ---
+user: adrian
 owner: adrian
 group: adrian
+
+package_name: plexmediaserver
+service_name: plexmediaserver
+
+plex_path: /var/lib/plexmediaserver
+systemd_override_path: /etc/systemd/system/plexmediaserver.service.d
