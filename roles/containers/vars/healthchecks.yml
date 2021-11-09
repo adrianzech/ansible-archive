@@ -1,0 +1,30 @@
+---
+container_name: healthchecks 
+
+image: linuxserver/healthchecks
+tag: latest
+
+container_directories:
+  - /opt/healthchecks 
+
+container_ports:
+  - 8000:8000
+
+container_env:
+  PUID: 1000
+  PGID: 1000
+  SITE_ROOT: https://healthchecks.zech.co
+  SITE_NAME: Healthchecks
+  DEFAULT_FROM_EMAIL: "{{ email_username }}"
+  EMAIL_HOST: "{{ email_host }}"
+  EMAIL_PORT: 465
+  EMAIL_HOST_USER: "{{ email_username }}"
+  EMAIL_HOST_PASSWORD: "{{ email_password }}"
+  EMAIL_USE_TLS: True
+  SUPERUSER_EMAIL: adrian@zech.co
+  SUPERUSER_PASSWORD: "{{ healthchecks_password }}"
+
+container_volumes:
+  - /opt/healthchecks:/config
+
+container_command:

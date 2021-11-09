@@ -17,6 +17,7 @@ database:
 
 monitoring:
   - uptime-kuma
+  - healthchecks
 
 home:
   - home-assistant
