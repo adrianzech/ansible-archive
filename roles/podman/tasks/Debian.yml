@@ -1,11 +1,13 @@
 ---
-- name: Test for line
-  command: grep -c "^[registries.search]" /etc/containers/registries.conf || true
-  register: test_grep
-  changed_when: test_grep.rc != 0
+- name: Add docker.io to registries
+  lineinfile:
+    path: /etc/containers/registries.conf
+    line: "[registries.search]"
+    state: present
 
 - name: Add docker.io to registries
   lineinfile:
     path: /etc/containers/registries.conf
-    line: "[registries.search]\nregistries = ['docker.io']"
-  when: test_grep.stdout == "0"
+    insertafter: '^[registries.search]'
+    line: "registries = ['docker.io']"
+    state: present

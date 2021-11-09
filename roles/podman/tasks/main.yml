@@ -1,7 +1,6 @@
 ---
 - name: Enable linger
   command: "loginctl enable-linger  {{ user }}"
-  changed_when: test_grep.changed == true
 
 - name: Install podman
   package:
