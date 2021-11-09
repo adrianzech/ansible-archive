@@ -10,14 +10,6 @@
 - name: Include os specific tasks
   include_tasks: "{{ ansible_os_family }}.yml"
 
-- name: Create .hushlogin file
-  file:
-    path: "/home/{{ user }}/.hushlogin"
-    owner: "{{ user }}"
-    group: "{{ user }}"
-    state: touch
-    mode: 0644
-
 - name: Configure vim
   lineinfile:
     path: "{{ vimrc_path }}"

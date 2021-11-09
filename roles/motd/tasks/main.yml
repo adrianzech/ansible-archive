@@ -1,0 +1,32 @@
+---
+- name: Install figlet
+  package:
+    name: figlet
+    state: latest
+
+- name: Import motd files
+  copy:
+    src: "{{ item }}"
+    dest: "{{ motd_path }}/{{ item }}"
+    owner: root
+    group: root
+    mode: 0755
+  loop:
+    - 00-header
+    - 10-sysinfo
+    - 90-footer
+
+- name: Delete uname motd
+  file:
+    path: "{{ motd_path }}/10-uname"
+    state: absent
+
+- name: Delete default motd
+  file:
+    path: /etc/motd
+    state: absent
+
+- name: Delete cockpit motd
+  file:
+    path: /etc/motd.d/cockpit
+    state: absent

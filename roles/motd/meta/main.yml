@@ -1,0 +1,19 @@
+---
+dependencies: []
+
+galaxy_info:
+  author: Adrian Zech
+  description: Setup message of the day
+  company: Homelab
+
+  license: license (MIT)
+
+  min_ansible_version: 2.9
+
+  platforms:
+    - name: Debian
+      versions:
+        - bullseye
+
+  galaxy_tags:
+    - motd

@@ -5,6 +5,7 @@
   roles:
     - update
     - common
+    - motd
     - setup_ssh
     - mounts
     - zabbix_agent
