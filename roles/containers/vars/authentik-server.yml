@@ -19,14 +19,14 @@ container_env:
   AUTHENTIK_POSTGRESQL__NAME: authentik
   AUTHENTIK_POSTGRESQL__PASSWORD: "{{ authentik_database_password }}"
   AUTHENTIK_SECRET_KEY: "{{ authentik_secret }}"
-  AUTHENTIK_EMAIL__HOST: mail.zech.co
+  AUTHENTIK_EMAIL__HOST: "{{ email_host }}"
   AUTHENTIK_EMAIL__PORT: 587
-  AUTHENTIK_EMAIL__USERNAME: 'info@zech.co'
-  AUTHENTIK_EMAIL__PASSWORD: "{{ authentik_email_password }}"
+  AUTHENTIK_EMAIL__USERNAME: "{{ email_username }}"
+  AUTHENTIK_EMAIL__PASSWORD: "{{ email_password }}"
   AUTHENTIK_EMAIL__USE_TLS: true
   AUTHENTIK_EMAIL__USE_SSL: false
   AUTHENTIK_EMAIL__TIMEOUT: 10
-  AUTHENTIK_EMAIL__FROM: 'info@zech.co'
+  AUTHENTIK_EMAIL__FROM: "{{ email_username }}"
 
 container_volumes:
   - /opt/authentik/media:/media
