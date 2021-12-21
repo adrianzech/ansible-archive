@@ -40,6 +40,7 @@ virtual_machines:
     - media-server
     - media-stack
     - management
+    - gameserver-1
     - debian-testing-1
     - debian-testing-2
     - debian-testing-3
